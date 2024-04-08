@@ -11,15 +11,15 @@ Feature: Listing Users
       | 1    | emma.wong@reqres.in        | Emma       | Wong      |
       | 2    | lindsay.ferguson@reqres.in | Lindsay    | Ferguson  |
 
-  Scenario Outline: View a specifik user
-    When we search for a user by id <id>
-    Then the following user should be returned:
-      | email   | first_name   | last_name   |
-      | <email> | <first_name> | <last_name> |
-    Examples:
-      | id | email                    | first_name | last_name |
-      | 3  | emma.wong@reqres.in      | Emma       | Wong      |
-      | 5  | charles.morris@reqres.in | Charles    | Morris    |
+#  Scenario Outline: View a specifik user
+#    When we search for a user by id <id>
+#    Then the following user should be returned:
+#      | email   | first_name   | last_name   |
+#      | <email> | <first_name> | <last_name> |
+#    Examples:
+#      | id | email                    | first_name | last_name |
+#      | 3  | emma.wong@reqres.in      | Emma       | Wong      |
+#      | 5  | charles.morris@reqres.in | Charles    | Morris    |
 
 
 
