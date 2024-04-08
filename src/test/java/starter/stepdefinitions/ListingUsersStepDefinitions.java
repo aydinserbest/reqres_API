@@ -39,6 +39,8 @@ public class ListingUsersStepDefinitions {
     2. way to send table is using domain object, here we used record object,
     instead of List<Map<String, String>> userData,
     we use List<User> users  --> List of User objects
+
+    sout --> [User[email=george.bluth@reqres.in, firstName=George, lastName=Bluth]]
      */
     @DataTableType
     public User user(Map<String, String> userData){
