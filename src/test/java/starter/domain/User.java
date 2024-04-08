@@ -2,10 +2,13 @@ package starter.domain;
 
 public record User(String email, String firstName, String lastName) {
 }
-/*
-    1- Cucumber performs field name to column name matching in a case-sensitive manner.
-    2- If the field names in your User class do not exactly match the column names in your feature file,
-    Cucumber will not be able to perform the transformation correctly.
-    3- This class should have fields that match the column headers in the table and the field names
-    should be the same as the column names, case sensitively.
- */
+    /*
+    Then the users should include:
+      | email   | first_name   | last_name   |  --> these will be the field name of this  User Record
+      | <email> | <first_name> | <last_name> |
+    Examples:
+      | Page | email                      | first_name | last_name |
+      | 1    | george.bluth@reqres.in     | George     | Bluth     |
+
+      we are receiving Then part, row titles from feature file
+     */

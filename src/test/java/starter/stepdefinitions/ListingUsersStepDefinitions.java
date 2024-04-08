@@ -1,5 +1,6 @@
 package starter.stepdefinitions;
 
+import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import starter.domain.User;
@@ -39,6 +40,19 @@ public class ListingUsersStepDefinitions {
     instead of List<Map<String, String>> userData,
     we use List<User> users  --> List of User objects
      */
+    @DataTableType
+    public User user(Map<String, String> userData){
+        return new User(
+                userData.get("email"),
+                userData.get("first_name"),
+                userData.get("last_name")
+        );
+        /*
+        1- The get() method's string input parameter ("first_name") corresponds
+        to the column name in your feature file (first_name).
+        2- The keys in the map must match exactly with the row names in the datatable in your feature file.
+         */
+    }
     @Then("the users should include:")
     public void userListShouldInclude(List<User> users){
         System.out.println(users);
