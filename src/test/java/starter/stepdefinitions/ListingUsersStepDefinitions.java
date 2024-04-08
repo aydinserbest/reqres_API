@@ -50,13 +50,12 @@ public class ListingUsersStepDefinitions {
                 userData.get("last_name")
         );
         /*
-        1- The get() method's string input parameter ("first_name") corresponds
-        to the column name in your feature file (first_name).
+    1- The get() method's string input parameter ("first_name") corresponds to the column name in your feature file (first_name).
         2- The keys in the map must match exactly with the row names in the datatable in your feature file.
          */
     }
     @Then("the users should include:")
-    public void userListShouldInclude(List<User> users){
+    public void userListShouldInclude(User users){ //WE DO NOT NEED TO USE List<User> users
         System.out.println(users);
     }
 
