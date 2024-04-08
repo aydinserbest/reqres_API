@@ -2,6 +2,7 @@ package starter.stepdefinitions;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import starter.domain.User;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class ListingUsersStepDefinitions {
 
     }
 
-    //we are sending table from feature file as List<Map<String, String>>
+    //we are sending table here from feature file as List<Map<String, String>>
     /*
     Examples:
       | Page | email                      | first_name | last_name |
@@ -28,10 +29,19 @@ public class ListingUsersStepDefinitions {
     ]
 
      */
+//    @Then("the users should include:")
+//    public void userListShouldInclude(List<Map<String, String>> userData){
+//        System.out.println(userData);
+//        // output:  [{email=emma.wong@reqres.in, first_name=Emma, last_name=Wong}]
+//    }
+    /*
+    2. way to send table is using domain object, here we used record object,
+    instead of List<Map<String, String>> userData,
+    we use List<User> users  --> List of User objects
+     */
     @Then("the users should include:")
-    public void userListShouldInclude(List<Map<String, String>> userData){
-        System.out.println(userData);
-        // output:  [{email=emma.wong@reqres.in, first_name=Emma, last_name=Wong}]
+    public void userListShouldInclude(List<User> users){
+        System.out.println(users);
     }
 
 }
