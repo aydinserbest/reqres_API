@@ -1,5 +1,6 @@
 package starter.stepdefinitions;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -10,9 +11,11 @@ import java.util.Map;
 
 public class ListingUsersStepDefinitions {
     @When("we search users on page {int}")
-    public void serachUsersOnpage(int page){
+    public void serachUsersOnpage(int page) {
 
     }
+    //The ways of passing table in feature file to the step definition:
+    //1- List<Map<String, String>>
 
     //we are sending table here from feature file as List<Map<String, String>>
     /*
@@ -43,20 +46,47 @@ public class ListingUsersStepDefinitions {
     sout --> [User[email=george.bluth@reqres.in, firstName=George, lastName=Bluth]]
      */
     @DataTableType
-    public User user(Map<String, String> userData){
+    public User user(Map<String, String> userData) {
         return new User(
                 userData.get("email"),
                 userData.get("first_name"),
                 userData.get("last_name")
         );
+    }
         /*
     1- The get() method's string input parameter ("first_name") corresponds to the column name in your feature file (first_name).
         2- The keys in the map must match exactly with the row names in the datatable in your feature file.
          */
-    }
+
     @Then("the users should include:")
-    public void userListShouldInclude(User users){ //WE DO NOT NEED TO USE List<User> users
+    public void userListShouldInclude(User users) { //WE DO NOT NEED TO USE List<User> users
         System.out.println(users);
     }
+
+    /*
+    //3.way of passing table in feature file to the step definition is using DataTable
+    //if we will not use User.class inside asList ( ) parameter,
+    //we do not need @DataTableType annotation
+
+    @Then("the users should include:")
+    public void userListShouldInclude(DataTable table) {
+        List<Map<String, String>> list = table.asMaps(String.class, String.class);
+        System.out.println(list);
+    }
+
+     */
+    /*
+    if we will benefit of User domain object,
+    we need @DataTableType annotation
+
+    @Then("the users should include:")
+
+    public void userListShouldInclude(DataTable table) {
+        List<User> list = table.asList(User.class);
+        System.out.println(list);
+    }
+
+     */
+
 
 }
