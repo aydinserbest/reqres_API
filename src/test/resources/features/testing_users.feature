@@ -1,6 +1,6 @@
 Feature: Listing Users
 
-  Scenario Outline: View all known users
+  Scenario Outline: View  known user with email <email>
     When we search users on page <Page>
     Then the users should include:
       | email   | first_name   | last_name   |

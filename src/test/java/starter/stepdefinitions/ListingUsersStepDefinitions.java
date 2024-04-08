@@ -1,17 +1,19 @@
 package starter.stepdefinitions;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import starter.domain.User;
 
-import java.util.List;
 import java.util.Map;
 
 public class ListingUsersStepDefinitions {
+    int page;
     @When("we search users on page {int}")
     public void serachUsersOnpage(int page) {
+        this.page = page;
 
     }
     //The ways of passing table in feature file to the step definition:
@@ -60,7 +62,28 @@ public class ListingUsersStepDefinitions {
 
     @Then("the users should include:")
     public void userListShouldInclude(User users) { //WE DO NOT NEED TO USE List<User> users
-        System.out.println(users);
+
+        /*
+        1-
+        hard coded:
+        Response = RestAssured.get("https://reqres.in/api/users?page=2");// this line will give us a response
+
+         */
+        /*
+        2-
+        we can get page from above:
+        RestAssured.given()
+                .get("https://reqres.in/api/users?page="+page);
+
+         */
+        //3-using query param:
+        Response response
+                = RestAssured.given()
+                             .queryParam("page", page)
+                             .get("https://reqres.in/api/users");
+        response.then().statusCode(200);
+        System.out.println(response.asString());
+        System.out.println(response.asPrettyString());
     }
 
     /*
