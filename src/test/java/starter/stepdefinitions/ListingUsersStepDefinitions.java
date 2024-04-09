@@ -82,16 +82,18 @@ public class ListingUsersStepDefinitions {
 
          */
         //3-using query param:
-        Response response
+        // we retrieve the data
+        List<Map<String, Object>> users
                 = RestAssured.given()
                              .queryParam("page", page)
-                             .get("https://reqres.in/api/users");
-        response.then().statusCode(200);
-        List<Map<String, Object>> users = response.jsonPath().get("data");
+                             .get("https://reqres.in/api/users")
+                             .jsonPath()
+                             .getList("data");
 
 
-        System.out.println(users);
-        System.out.println(users.get(0).get("first_name"));
+
+//        System.out.println(users);
+//        System.out.println(users.get(0).get("first_name"));
 
         assertThat(users).anyMatch(
                 returnedUser -> isSameUser(returnedUser, expectedUser)
