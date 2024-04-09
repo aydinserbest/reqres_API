@@ -11,6 +11,9 @@ import starter.domain.response.ApiResponse;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
 public class ListingUsersStepDefinitions {
     int page;
     @When("we search users on page {int}")
@@ -63,7 +66,7 @@ public class ListingUsersStepDefinitions {
          */
 
     @Then("the users should include:")
-    public void userListShouldInclude(User users) { //WE DO NOT NEED TO USE List<User> users
+    public void userListShouldInclude(User expectedUser) { //WE DO NOT NEED TO USE List<User> users
 
         /*
         1-
@@ -84,15 +87,26 @@ public class ListingUsersStepDefinitions {
                              .queryParam("page", page)
                              .get("https://reqres.in/api/users");
         response.then().statusCode(200);
+        List<Map<String, Object>> users = response.jsonPath().get("data");
 
-        ApiResponse us = response.as(ApiResponse.class);
-        List<ApiResponse.Data> data = us.data();
-        System.out.println(data.get(0).first_name());
+
+        System.out.println(users);
+        System.out.println(users.get(0).get("first_name"));
+
+        assertThat(users).anyMatch(
+                returnedUser -> isSameUser(returnedUser, expectedUser)
+        );
+
+
+
+//        ApiResponse us = response.as(ApiResponse.class);
+//        List<ApiResponse.Data> data = us.data();
+//        System.out.println(data.get(0).first_name());
 
 //        List<Map<String, String>> list = response.jsonPath().get("data");
 //        System.out.println(list.get(0).get("first_name"));
-        System.out.println(response.asString());
-        System.out.println(response.asPrettyString());
+//        System.out.println(response.asString());
+//        System.out.println(response.asPrettyString());
     }
 
     /*
@@ -120,5 +134,9 @@ public class ListingUsersStepDefinitions {
 
      */
 
-
+    private boolean isSameUser(Map<String, Object> returnedUser,User expectedUser){
+        return returnedUser.get("email").equals(expectedUser.email())
+                && returnedUser.get("first_name").equals(expectedUser.firstName())
+                && returnedUser.get("last_name").equals(expectedUser.lastName());
+    }
 }
