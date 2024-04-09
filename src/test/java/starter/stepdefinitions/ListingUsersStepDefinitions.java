@@ -6,7 +6,9 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import starter.domain.User;
+import starter.domain.response.ApiResponse;
 
+import java.util.List;
 import java.util.Map;
 
 public class ListingUsersStepDefinitions {
@@ -82,6 +84,13 @@ public class ListingUsersStepDefinitions {
                              .queryParam("page", page)
                              .get("https://reqres.in/api/users");
         response.then().statusCode(200);
+
+        ApiResponse us = response.as(ApiResponse.class);
+        List<ApiResponse.Data> data = us.data();
+        System.out.println(data.get(0).first_name());
+
+//        List<Map<String, String>> list = response.jsonPath().get("data");
+//        System.out.println(list.get(0).get("first_name"));
         System.out.println(response.asString());
         System.out.println(response.asPrettyString());
     }
